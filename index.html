@@ -1,76 +1,799 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#fff8f6">
-  <meta name="description" content="Enter two names for a playful marriage-fixed-or-not prediction. Just for fun!">
-  <title>Shaadi Check — Marriage Fixed or Not?</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#f5f8ee">
+    <meta name="description" content="Small choices make a greener campus. Discover campus sustainability, get eco tips, and calculate your impact.">
+    <title>Green Campus — Small choices, brighter future</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --page: #f5f8ee;
+            --surface: #fffefa;
+            --surface-soft: #edf3e4;
+            --ink: #203b2e;
+            --muted: #718071;
+            --green: #277347;
+            --green-dark: #1d5b39;
+            --lime: #d3ef74;
+            --line: #e4ebdc;
+            --shadow: 0 18px 50px rgba(37, 72, 47, .09);
+        }
+
+        html[data-theme="dark"] {
+            color-scheme: dark;
+            --page: #14251d;
+            --surface: #1c3025;
+            --surface-soft: #263d2e;
+            --ink: #eff5e9;
+            --muted: #adbdab;
+            --green: #a9dc8b;
+            --green-dark: #d3ef74;
+            --lime: #d3ef74;
+            --line: #344a39;
+            --shadow: 0 18px 50px rgba(0, 0, 0, .2);
+        }
+
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; scroll-padding-top: 85px; }
+        body {
+            min-width: 320px;
+            margin: 0;
+            background: var(--page);
+            color: var(--ink);
+            font-family: "Segoe UI", ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            transition: background .25s, color .25s;
+        }
+        button, input { font: inherit; }
+        button { color: inherit; }
+        a { color: inherit; }
+        .wrap { width: min(1120px, calc(100% - 44px)); margin-inline: auto; }
+        .topbar {
+            position: sticky;
+            z-index: 10;
+            top: 0;
+            border-bottom: 1px solid var(--line);
+            background: color-mix(in srgb, var(--page) 90%, transparent);
+            backdrop-filter: blur(14px);
+        }
+        .nav {
+            min-height: 76px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 24px;
+        }
+        .brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 800;
+            letter-spacing: -.03em;
+            white-space: nowrap;
+        }
+        .brand-mark {
+            width: 37px;
+            height: 37px;
+            display: grid;
+            place-items: center;
+            border-radius: 13px;
+            background: var(--green);
+            color: white;
+            font-size: 20px;
+        }
+        .nav-links { display: flex; align-items: center; gap: 27px; }
+        .nav-links a {
+            color: var(--muted);
+            font-size: 13px;
+            font-weight: 650;
+            text-decoration: none;
+            transition: color .2s;
+        }
+        .nav-links a:hover { color: var(--green); }
+        .theme-toggle {
+            width: 42px;
+            height: 42px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--line);
+            border-radius: 50%;
+            background: var(--surface);
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform .2s, border-color .2s;
+        }
+        .theme-toggle:hover { transform: rotate(-12deg); border-color: var(--green); }
+        :focus-visible { outline: 3px solid #9ac76b; outline-offset: 3px; }
+
+        .hero { padding: 45px 0 34px; }
+        .hero-panel {
+            min-height: 425px;
+            position: relative;
+            display: grid;
+            grid-template-columns: 1.03fr .97fr;
+            overflow: hidden;
+            border-radius: 30px;
+            background: #dcebc8;
+            box-shadow: var(--shadow);
+        }
+        .hero-copy {
+            z-index: 1;
+            align-self: center;
+            padding: 58px 25px 58px 62px;
+            color: #203b2e;
+        }
+        .eyebrow {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            border: 1px solid rgba(39, 115, 71, .18);
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .48);
+            color: #27623e;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+        .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: #5da351; }
+        h1, h2, h3, p { margin-top: 0; }
+        h1 {
+            max-width: 520px;
+            margin: 20px 0 14px;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(44px, 6vw, 72px);
+            font-weight: 500;
+            letter-spacing: -.065em;
+            line-height: .99;
+        }
+        h1 em { color: #347d4a; font-weight: 500; }
+        .hero-copy > p {
+            max-width: 420px;
+            margin-bottom: 25px;
+            color: #526c55;
+            font-size: 15px;
+            line-height: 1.75;
+        }
+        .button-link {
+            min-height: 47px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            padding: 0 19px;
+            border: 0;
+            border-radius: 12px;
+            background: #246842;
+            color: white;
+            font-size: 13px;
+            font-weight: 750;
+            text-decoration: none;
+            transition: transform .2s, background .2s;
+        }
+        .button-link:hover { transform: translateY(-2px); background: #194f32; }
+        .hero-art {
+            min-height: 425px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(155deg, #c9e2b1, #edf1c5 66%, #f5dfa4);
+        }
+        .hero-art::before {
+            width: 360px;
+            height: 360px;
+            position: absolute;
+            top: 30px;
+            left: 50%;
+            border: 1px solid rgba(255, 255, 255, .65);
+            border-radius: 50%;
+            content: "";
+            transform: translateX(-50%);
+        }
+        .sun {
+            width: 76px;
+            height: 76px;
+            position: absolute;
+            top: 50px;
+            right: 15%;
+            border-radius: 50%;
+            background: #f4ca64;
+            box-shadow: 0 0 0 15px rgba(255,255,255,.15), 0 0 50px rgba(244,202,100,.5);
+        }
+        .hill {
+            position: absolute;
+            right: -15%;
+            bottom: -66px;
+            left: -15%;
+            height: 190px;
+            border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+            background: #a8c987;
+            transform: rotate(-4deg);
+        }
+        .hill-back {
+            right: -25%;
+            bottom: -91px;
+            left: 5%;
+            height: 190px;
+            background: #7eae70;
+            transform: rotate(7deg);
+        }
+        .building {
+            width: 185px;
+            height: 147px;
+            position: absolute;
+            bottom: 80px;
+            left: 50%;
+            border: 4px solid #577f56;
+            border-bottom: 0;
+            background: #fff8df;
+            box-shadow: inset 0 0 0 7px rgba(255,255,255,.5), 6px 8px 0 rgba(50,90,54,.12);
+            transform: translateX(-50%);
+        }
+        .building::before {
+            width: 212px;
+            height: 24px;
+            position: absolute;
+            top: -25px;
+            left: -17px;
+            background: #547a52;
+            clip-path: polygon(8% 0, 92% 0, 100% 100%, 0 100%);
+            content: "";
+        }
+        .building::after {
+            width: 24px;
+            height: 45px;
+            position: absolute;
+            bottom: 0;
+            left: calc(50% - 12px);
+            border: 3px solid #73926a;
+            border-bottom: 0;
+            border-radius: 14px 14px 0 0;
+            background: #d7e5b3;
+            content: "";
+        }
+        .window {
+            width: 28px;
+            height: 34px;
+            position: absolute;
+            top: 25px;
+            border: 3px solid #86a573;
+            background: #c6e2d6;
+        }
+        .window-one { left: 25px; }
+        .window-two { right: 25px; }
+        .solar-roof {
+            width: 117px;
+            height: 8px;
+            position: absolute;
+            z-index: 1;
+            top: -7px;
+            left: 32px;
+            border-radius: 4px;
+            background: repeating-linear-gradient(90deg, #365f53 0 25px, #82ac75 25px 27px);
+            box-shadow: 0 -7px 0 -2px #3a7153;
+        }
+        .tree {
+            position: absolute;
+            bottom: 96px;
+            color: #4f854f;
+            font-size: 85px;
+            line-height: 1;
+            filter: drop-shadow(4px 7px 0 rgba(39, 90, 50, .12));
+        }
+        .tree-left { left: 8%; font-size: 75px; }
+        .tree-right { right: 9%; bottom: 91px; }
+        .floating-card {
+            position: absolute;
+            right: 7%;
+            bottom: 27px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            padding: 12px 15px;
+            border: 1px solid rgba(255,255,255,.65);
+            border-radius: 13px;
+            background: rgba(255,255,255,.8);
+            box-shadow: 0 9px 24px rgba(43,75,48,.12);
+            color: #31593b;
+            font-size: 12px;
+            font-weight: 750;
+        }
+        .floating-card span:first-child { font-size: 20px; }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            margin: 0 0 78px;
+        }
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 17px 19px;
+            border: 1px solid var(--line);
+            border-radius: 17px;
+            background: var(--surface);
+        }
+        .stat-icon {
+            width: 43px;
+            height: 43px;
+            flex: 0 0 auto;
+            display: grid;
+            place-items: center;
+            border-radius: 14px;
+            background: var(--surface-soft);
+            font-size: 21px;
+        }
+        .stat strong { display: block; font-size: 20px; letter-spacing: -.04em; }
+        .stat small { color: var(--muted); font-size: 11px; }
+
+        .section { margin-bottom: 78px; }
+        .section-heading {
+            display: flex;
+            align-items: end;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 22px;
+        }
+        .section-kicker {
+            margin-bottom: 8px;
+            color: var(--green);
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+        }
+        .section-heading h2 {
+            margin: 0;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(30px, 4vw, 42px);
+            font-weight: 500;
+            letter-spacing: -.045em;
+        }
+        .section-heading > p { max-width: 360px; margin: 0 0 3px; color: var(--muted); font-size: 13px; line-height: 1.65; }
+        .activity-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        .activity {
+            min-height: 234px;
+            position: relative;
+            overflow: hidden;
+            padding: 23px;
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            background: var(--surface);
+            transition: transform .22s, box-shadow .22s;
+        }
+        .activity:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+        .activity-icon {
+            width: 49px;
+            height: 49px;
+            display: grid;
+            place-items: center;
+            margin-bottom: 22px;
+            border-radius: 16px;
+            background: var(--surface-soft);
+            font-size: 25px;
+        }
+        .activity h3 { margin-bottom: 8px; font-size: 17px; letter-spacing: -.025em; }
+        .activity p { max-width: 275px; margin: 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
+        .activity-number { position: absolute; top: 23px; right: 23px; color: var(--line); font-size: 12px; font-weight: 800; }
+
+        .interactive-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; }
+        .tool-card {
+            min-height: 302px;
+            padding: 27px;
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            background: var(--surface);
+            box-shadow: 0 7px 24px rgba(37, 72, 47, .035);
+        }
+        .tool-title { display: flex; align-items: center; gap: 12px; margin-bottom: 6px; }
+        .tool-title .activity-icon { width: 44px; height: 44px; margin: 0; font-size: 22px; }
+        .tool-title h3 { margin: 0; font-size: 18px; letter-spacing: -.03em; }
+        .tool-description { margin: 0 0 20px 56px; color: var(--muted); font-size: 12px; line-height: 1.6; }
+        .calculator-fields { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .calculator-fields label { display: block; margin-bottom: 7px; color: var(--muted); font-size: 11px; font-weight: 700; }
+        .calculator-fields input {
+            width: 100%;
+            height: 43px;
+            padding: 0 11px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--page);
+            color: var(--ink);
+            outline: 0;
+        }
+        .calculator-fields input:focus { border-color: var(--green); box-shadow: 0 0 0 3px color-mix(in srgb, var(--green) 18%, transparent); }
+        .calculate-button {
+            min-height: 42px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 14px;
+            padding: 0 14px;
+            border: 0;
+            border-radius: 10px;
+            background: var(--green);
+            color: white;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 750;
+            transition: filter .2s, transform .2s;
+        }
+        .calculate-button:hover { transform: translateY(-1px); filter: brightness(1.08); }
+        .calculator-result {
+            min-height: 42px;
+            margin: 13px 0 0;
+            color: var(--green);
+            font-size: 13px;
+            font-weight: 750;
+            line-height: 1.5;
+        }
+        .challenge-card {
+            display: flex;
+            flex-direction: column;
+            background: var(--surface-soft);
+        }
+        .challenge-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .today-pill {
+            padding: 7px 10px;
+            border-radius: 999px;
+            background: color-mix(in srgb, var(--green) 12%, var(--surface));
+            color: var(--green);
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: .08em;
+            text-transform: uppercase;
+        }
+        .challenge-card h3 { margin: 23px 0 8px; font-family: Georgia, "Times New Roman", serif; font-size: 27px; font-weight: 500; letter-spacing: -.035em; }
+        .challenge-card > p { max-width: 360px; margin: 0; color: var(--muted); font-size: 13px; line-height: 1.7; }
+        .challenge-action {
+            min-height: 42px;
+            align-self: flex-start;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: auto;
+            padding: 0 14px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--surface);
+            color: var(--ink);
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 750;
+            transition: border-color .2s, background .2s;
+        }
+        .challenge-action:hover { border-color: var(--green); }
+        .challenge-action[aria-pressed="true"] { border-color: var(--green); background: var(--green); color: white; }
+        .tip-card {
+            position: relative;
+            overflow: hidden;
+            margin-top: 18px;
+            padding: 21px 24px;
+            border-radius: 18px;
+            background: #f3e7b6;
+            color: #4e482a;
+        }
+        .tip-card::after { position: absolute; right: 21px; bottom: -28px; color: rgba(112, 121, 48, .13); content: "✳"; font-size: 105px; line-height: 1; }
+        .tip-head { position: relative; z-index: 1; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+        .tip-label { margin: 0; font-size: 10px; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+        .tip-next {
+            padding: 7px 10px;
+            border: 1px solid rgba(78,72,42,.2);
+            border-radius: 999px;
+            background: rgba(255,255,255,.35);
+            color: inherit;
+            cursor: pointer;
+            font-size: 10px;
+            font-weight: 750;
+        }
+        .tip-next:hover { background: rgba(255,255,255,.7); }
+        .tip-text { position: relative; z-index: 1; max-width: 660px; margin: 13px 0 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(18px, 2.4vw, 23px); line-height: 1.4; }
+
+        .gallery-grid { display: grid; grid-template-columns: 1.2fr 1fr 1fr; grid-template-rows: 165px 165px; gap: 13px; }
+        .gallery-item { position: relative; overflow: hidden; border-radius: 17px; background: var(--surface-soft); }
+        .gallery-item:first-child { grid-row: span 2; }
+        .gallery-item img { width: 100%; height: 100%; display: block; object-fit: cover; transition: transform .45s; }
+        .gallery-item:hover img { transform: scale(1.05); }
+        .gallery-item::after { position: absolute; inset: 30% 0 0; background: linear-gradient(transparent, rgba(17, 38, 25, .72)); content: ""; pointer-events: none; }
+        .gallery-caption { position: absolute; z-index: 1; right: 15px; bottom: 14px; left: 15px; color: white; font-size: 12px; font-weight: 750; text-shadow: 0 1px 5px rgba(0,0,0,.2); }
+
+        .footer { padding: 25px 0 35px; border-top: 1px solid var(--line); }
+        .footer-inner { display: flex; align-items: center; justify-content: space-between; gap: 15px; }
+        .footer p { margin: 0; color: var(--muted); font-size: 11px; }
+        .footer a { color: var(--green); font-size: 11px; font-weight: 750; text-decoration: none; }
+
+        @media (max-width: 800px) {
+            .nav-links { gap: 15px; }
+            .nav-links a { font-size: 12px; }
+            .hero-copy { padding-left: 35px; }
+            .hero-panel, .hero-art { min-height: 380px; }
+            .building { transform: translateX(-50%) scale(.88); transform-origin: bottom center; }
+            .tree-left { left: 2%; }
+            .tree-right { right: 3%; }
+            .stat { padding: 14px 12px; gap: 10px; }
+            .stat strong { font-size: 17px; }
+        }
+        @media (max-width: 620px) {
+            .wrap { width: min(100% - 30px, 480px); }
+            .nav { min-height: 66px; gap: 10px; }
+            .brand { font-size: 13px; }
+            .brand-mark { width: 34px; height: 34px; }
+            .nav-links { display: none; }
+            .hero { padding-top: 20px; }
+            .hero-panel { grid-template-columns: 1fr; }
+            .hero-copy { padding: 37px 27px 15px; }
+            h1 { max-width: 430px; font-size: clamp(48px, 13vw, 66px); }
+            .hero-copy > p { max-width: 410px; font-size: 14px; }
+            .hero-art { min-height: 265px; }
+            .hero-art::before { width: 250px; height: 250px; top: 10px; }
+            .sun { width: 55px; height: 55px; top: 27px; }
+            .building { bottom: 53px; transform: translateX(-50%) scale(.72); }
+            .hill { bottom: -105px; }
+            .hill-back { bottom: -125px; }
+            .tree { bottom: 58px; font-size: 65px; }
+            .tree-left { left: 5%; font-size: 58px; }
+            .tree-right { right: 5%; bottom: 55px; }
+            .floating-card { right: 5%; bottom: 13px; padding: 9px 11px; font-size: 10px; }
+            .stats { gap: 8px; margin-bottom: 59px; }
+            .stat { align-items: flex-start; flex-direction: column; padding: 12px 10px; border-radius: 14px; }
+            .stat-icon { width: 34px; height: 34px; border-radius: 11px; font-size: 17px; }
+            .stat strong { font-size: 15px; }
+            .stat small { font-size: 9px; line-height: 1.4; }
+            .section { margin-bottom: 59px; }
+            .section-heading { align-items: flex-start; flex-direction: column; gap: 9px; }
+            .section-heading > p { font-size: 12px; }
+            .activity-grid { grid-template-columns: 1fr; gap: 11px; }
+            .activity { min-height: auto; display: grid; grid-template-columns: 48px 1fr; column-gap: 14px; padding: 17px; }
+            .activity-icon { grid-row: span 2; width: 45px; height: 45px; margin: 0; font-size: 22px; }
+            .activity h3 { align-self: end; margin: 0 0 4px; font-size: 15px; }
+            .activity p { font-size: 11px; }
+            .activity-number { top: 17px; right: 17px; }
+            .interactive-grid { grid-template-columns: 1fr; gap: 12px; }
+            .tool-card { min-height: 285px; padding: 21px; }
+            .tool-description { margin-left: 0; margin-top: 10px; }
+            .calculator-fields { gap: 10px; }
+            .gallery-grid { grid-template-columns: 1fr 1fr; grid-template-rows: 200px 130px 130px; gap: 9px; }
+            .gallery-item:first-child { grid-column: span 2; grid-row: auto; }
+            .gallery-caption { right: 11px; bottom: 10px; left: 11px; font-size: 10px; }
+            .footer-inner { align-items: flex-start; flex-direction: column; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+        }
+    </style>
 </head>
 <body>
-  <main class="page">
     <header class="topbar">
-      <a class="brand" href="#" aria-label="Shaadi Check home">
-        <span class="brand-icon" aria-hidden="true">♥</span>
-        <span>shaadi check</span>
-      </a>
-      <span class="topbar-note"><span class="sparkle" aria-hidden="true">✦</span> your fun little shaadi check</span>
+        <nav class="nav wrap" aria-label="Main navigation">
+            <a class="brand" href="#home"><span class="brand-mark" aria-hidden="true">🌱</span> Green Campus</a>
+            <div class="nav-links">
+                <a href="#activities">Activities</a>
+                <a href="#eco-tools">Eco tools</a>
+                <a href="#gallery">Gallery</a>
+            </div>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">🌙</button>
+        </nav>
     </header>
 
-    <section class="hero" aria-labelledby="page-title">
-      <div class="hero-copy">
-        <p class="eyebrow"><span aria-hidden="true">✳</span> THE BIG SHAADI QUESTION</p>
-        <h1 id="page-title">Marriage<br><span>fixed or not?</span></h1>
-        <p class="intro">Enter two names and get a playful little prediction. Will wedding bells ring, or is the plot still unfolding?</p>
-        <div class="love-note"><span aria-hidden="true">♡</span> Just for fun — your future is yours to write.</div>
-      </div>
-
-      <div class="card-wrap">
-        <span class="decor decor-one" aria-hidden="true">✳</span>
-        <span class="decor decor-two" aria-hidden="true">✧</span>
-        <form class="calculator-card" id="marriage-form">
-          <div class="card-heading">
-            <span class="card-icon" aria-hidden="true">♥</span>
-            <div>
-              <p class="card-kicker">THE SHAADI PREDICTOR</p>
-              <h2>Who's getting married?</h2>
+    <main>
+        <section class="hero wrap" id="home" aria-labelledby="hero-title">
+            <div class="hero-panel">
+                <div class="hero-copy">
+                    <span class="eyebrow"><span class="eyebrow-dot"></span> Our campus, our planet</span>
+                    <h1 id="hero-title">A little greener.<br><em>A lot brighter.</em></h1>
+                    <p>Big change starts right here. Explore simple ways our campus community can care for the planet, together.</p>
+                    <a class="button-link" href="#activities">Explore green living <span aria-hidden="true">→</span></a>
+                </div>
+                <div class="hero-art" role="img" aria-label="Illustration of a sunlit, solar-powered campus surrounded by trees">
+                    <span class="sun" aria-hidden="true"></span>
+                    <span class="tree tree-left" aria-hidden="true">♣</span>
+                    <span class="tree tree-right" aria-hidden="true">♣</span>
+                    <div class="building" aria-hidden="true">
+                        <span class="solar-roof"></span>
+                        <span class="window window-one"></span>
+                        <span class="window window-two"></span>
+                    </div>
+                    <span class="hill" aria-hidden="true"></span>
+                    <span class="hill hill-back" aria-hidden="true"></span>
+                    <div class="floating-card"><span aria-hidden="true">☀️</span> Powered by possibility</div>
+                </div>
             </div>
-          </div>
+        </section>
 
-          <label for="first-name">First name</label>
-          <input id="first-name" name="firstName" type="text" placeholder="e.g. Aanya" maxlength="40" autocomplete="given-name" required>
+        <section class="stats wrap" aria-label="Campus sustainability highlights">
+            <div class="stat"><span class="stat-icon" aria-hidden="true">☀️</span><div><strong>Clean energy</strong><small>Sunshine powering our future</small></div></div>
+            <div class="stat"><span class="stat-icon" aria-hidden="true">♻️</span><div><strong>Less waste</strong><small>Reuse more, toss less</small></div></div>
+            <div class="stat"><span class="stat-icon" aria-hidden="true">💧</span><div><strong>Every drop</strong><small>Water is worth protecting</small></div></div>
+        </section>
 
-          <div class="heart-divider" aria-hidden="true"><span></span><b>♡</b><span></span></div>
-
-          <label for="second-name">Their name</label>
-          <input id="second-name" name="secondName" type="text" placeholder="e.g. Arjun" maxlength="40" autocomplete="off" required>
-
-          <button type="submit">Check the wedding vibes <span aria-hidden="true">→</span></button>
-          <p class="privacy-note"><span aria-hidden="true">✦</span> No data saved. Just a bit of shaadi-daydreaming.</p>
-
-          <div class="result" id="result" aria-live="polite" hidden>
-            <div class="result-topline"><span>THE FUN PREDICTION</span><span aria-hidden="true">✦</span></div>
-            <div class="score"><span id="score">0</span><span class="percent">%</span></div>
-            <div class="meter" role="progressbar" aria-label="Playful marriage prediction score" aria-valuemin="0" aria-valuemax="100">
-              <span class="meter-fill" id="meter-fill"></span>
+        <section class="section wrap" id="activities" aria-labelledby="activities-title">
+            <div class="section-heading">
+                <div><p class="section-kicker">Good things grow here</p><h2 id="activities-title">Greener campus living</h2></div>
+                <p>Small everyday choices add up. Here are a few ways to make a difference right where you learn and grow.</p>
             </div>
-            <h3 id="result-title"></h3>
-            <p id="result-message"></p>
-            <button type="button" class="try-again" id="try-again">Check another pair <span aria-hidden="true">↗</span></button>
-          </div>
-        </form>
-      </div>
-    </section>
+            <div class="activity-grid">
+                <article class="activity">
+                    <span class="activity-number">01 / ENERGY</span>
+                    <span class="activity-icon" aria-hidden="true">☀️</span>
+                    <h3>Solar energy</h3>
+                    <p>Make the most of clean, renewable sunshine. Switch off unused lights and support solar-powered spaces.</p>
+                </article>
+                <article class="activity">
+                    <span class="activity-number">02 / WASTE</span>
+                    <span class="activity-icon" aria-hidden="true">♻️</span>
+                    <h3>Smarter waste</h3>
+                    <p>Bring a reusable bottle, sort your recycling, and give single-use plastics a miss when you can.</p>
+                </article>
+                <article class="activity">
+                    <span class="activity-number">03 / WATER</span>
+                    <span class="activity-icon" aria-hidden="true">💧</span>
+                    <h3>Water wise</h3>
+                    <p>Use only what you need. Report leaky taps and help keep this precious resource flowing for everyone.</p>
+                </article>
+            </div>
+        </section>
+
+        <section class="section wrap" id="eco-tools" aria-labelledby="tools-title">
+            <div class="section-heading">
+                <div><p class="section-kicker">Make your impact count</p><h2 id="tools-title">Your daily dose of green</h2></div>
+                <p>Get a quick estimate of your greener commute and find one easy eco-action to try today.</p>
+            </div>
+            <div class="interactive-grid">
+                <section class="tool-card" aria-labelledby="calculator-title">
+                    <div class="tool-title"><span class="activity-icon" aria-hidden="true">🌍</span><h3 id="calculator-title">Eco commute calculator</h3></div>
+                    <p class="tool-description">Estimate the carbon emissions you avoid by walking, cycling, or taking transit instead of driving alone.</p>
+                    <form id="eco-form">
+                        <div class="calculator-fields">
+                            <div>
+                                <label for="commute-miles">Round-trip miles</label>
+                                <input id="commute-miles" name="miles" type="number" min="0.1" max="500" step="0.1" placeholder="e.g. 8" required>
+                            </div>
+                            <div>
+                                <label for="commute-days">Days each week</label>
+                                <input id="commute-days" name="days" type="number" min="1" max="7" step="1" placeholder="e.g. 3" required>
+                            </div>
+                        </div>
+                        <button class="calculate-button" type="submit">Calculate my impact <span aria-hidden="true">→</span></button>
+                    </form>
+                    <p class="calculator-result" id="calculator-result" aria-live="polite"></p>
+                </section>
+
+                <section class="tool-card challenge-card" aria-labelledby="challenge-title">
+                    <div class="challenge-top">
+                        <div class="tool-title"><span class="activity-icon" aria-hidden="true">🌿</span><h3 id="challenge-title">Daily green challenge</h3></div>
+                        <span class="today-pill" id="today-label">Today's challenge</span>
+                    </div>
+                    <h3 id="challenge-name">Bring a reusable cup</h3>
+                    <p id="challenge-description">Skip the disposable cup today. Bring your favorite reusable one for your coffee, tea, or water.</p>
+                    <button class="challenge-action" id="challenge-done" type="button" aria-pressed="false"><span aria-hidden="true">○</span> I did it!</button>
+                </section>
+            </div>
+
+            <aside class="tip-card" aria-labelledby="tip-label">
+                <div class="tip-head">
+                    <p class="tip-label" id="tip-label">🌼 A little green wisdom</p>
+                    <button class="tip-next" id="next-tip" type="button">Another tip ↗</button>
+                </div>
+                <p class="tip-text" id="tip-text" aria-live="polite">A reusable water bottle can keep hundreds of single-use plastic bottles out of the bin each year.</p>
+            </aside>
+        </section>
+
+        <section class="section wrap" id="gallery" aria-labelledby="gallery-title">
+            <div class="section-heading">
+                <div><p class="section-kicker">Little moments, lasting change</p><h2 id="gallery-title">Life around green campus</h2></div>
+                <p>Every greener choice helps make our shared spaces a little more beautiful.</p>
+            </div>
+            <div class="gallery-grid">
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1497250681960-ef046c08a56e?auto=format&amp;fit=crop&amp;w=1000&amp;q=85" alt="Sunlight falling across a lush green garden" loading="lazy">
+                    <figcaption class="gallery-caption">Room to grow 🌱</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1509391366360-2e959784a276?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Solar panels soaking up the sunshine" loading="lazy">
+                    <figcaption class="gallery-caption">Powered by the sun ☀️</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Hands holding a small green plant" loading="lazy">
+                    <figcaption class="gallery-caption">A greener tomorrow 🌿</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1518531933037-91b2f5f229cc?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="Fresh green leaves in a sunlit garden" loading="lazy">
+                    <figcaption class="gallery-caption">Nature, right here 🍃</figcaption>
+                </figure>
+                <figure class="gallery-item">
+                    <img src="https://images.unsplash.com/photo-1470058869958-2a77ade41c02?auto=format&amp;fit=crop&amp;w=700&amp;q=85" alt="A peaceful path through green trees" loading="lazy">
+                    <figcaption class="gallery-caption">Find your green space 🌳</figcaption>
+                </figure>
+            </div>
+        </section>
+    </main>
 
     <footer class="footer">
-      <span>Made with a little <span class="footer-heart" aria-label="love">♥</span> and shaadi-daydreams</span>
-      <span class="footer-right">For fun only — real life has no calculator.</span>
+        <div class="footer-inner wrap">
+            <p>🌱 Green Campus · Small choices, brighter future.</p>
+            <a href="#home">Back to top ↑</a>
+        </div>
     </footer>
-  </main>
+
+    <script>
+        const themeToggle = document.querySelector("#theme-toggle");
+        const themeColor = document.querySelector('meta[name="theme-color"]');
+
+        themeToggle.addEventListener("click", () => {
+            const isDark = document.documentElement.dataset.theme !== "dark";
+            document.documentElement.dataset.theme = isDark ? "dark" : "light";
+            themeToggle.textContent = isDark ? "☀️" : "🌙";
+            const nextMode = isDark ? "light" : "dark";
+            themeToggle.setAttribute("aria-label", `Switch to ${nextMode} mode`);
+            themeToggle.title = `Switch to ${nextMode} mode`;
+            themeColor.content = isDark ? "#14251d" : "#f5f8ee";
+        });
+
+        const ecoForm = document.querySelector("#eco-form");
+        const calculatorResult = document.querySelector("#calculator-result");
+
+        ecoForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            if (!ecoForm.reportValidity()) return;
+
+            const miles = Number(ecoForm.elements.miles.value);
+            const days = Number(ecoForm.elements.days.value);
+            if (!Number.isFinite(miles) || !Number.isFinite(days) || miles <= 0 || days < 1 || days > 7) {
+                calculatorResult.textContent = "Enter a distance above 0 and between 1–7 commute days.";
+                return;
+            }
+
+            const annualKg = miles * days * 50 * 0.404;
+            const formattedKg = new Intl.NumberFormat(undefined, { maximumFractionDigits: 1 }).format(annualKg);
+            calculatorResult.textContent = `That could avoid about ${formattedKg} kg of CO₂ a year!`;
+        });
+
+        const tips = [
+            "A reusable water bottle can keep hundreds of single-use plastic bottles out of the bin each year.",
+            "Switch off lights and screens when you leave a room—small energy savings add up.",
+            "A short walk or bike ride is a happy way to get around and cut commute emissions.",
+            "Try a meat-free meal today. Choosing more plant-based foods can lighten your footprint.",
+            "A full load uses water more efficiently—wait until you have one before doing laundry.",
+            "Sort waste into the right recycling bin so useful materials get a second life."
+        ];
+        let lastTip = 0;
+        document.querySelector("#next-tip").addEventListener("click", () => {
+            let nextTip = Math.floor(Math.random() * tips.length);
+            if (tips.length > 1) {
+                while (nextTip === lastTip) nextTip = Math.floor(Math.random() * tips.length);
+            }
+            lastTip = nextTip;
+            document.querySelector("#tip-text").textContent = tips[nextTip];
+        });
+
+        const challenges = [
+            ["Bring a reusable cup", "Skip the disposable cup today. Bring your favorite reusable one for your coffee, tea, or water."],
+            ["Take the greener route", "Walk, cycle, or take public transit for one trip today, if you can."],
+            ["Give lights a rest", "Turn off the lights when you leave an empty room today."],
+            ["Choose a meat-free meal", "Try a plant-based lunch or dinner and discover something delicious."],
+            ["Sort it out", "Take a moment to put your recycling and waste in the right bins."],
+            ["Save a little water", "Turn off the tap while brushing and make every drop count."]
+        ];
+        const dayNumber = Math.floor(Date.now() / 86400000);
+        const challengeIndex = dayNumber % challenges.length;
+        document.querySelector("#today-label").textContent = new Intl.DateTimeFormat(undefined, { weekday: "long" }).format(new Date());
+        document.querySelector("#challenge-name").textContent = challenges[challengeIndex][0];
+        document.querySelector("#challenge-description").textContent = challenges[challengeIndex][1];
+
+        const challengeButton = document.querySelector("#challenge-done");
+        challengeButton.addEventListener("click", () => {
+            const completed = challengeButton.getAttribute("aria-pressed") !== "true";
+            challengeButton.setAttribute("aria-pressed", String(completed));
+            challengeButton.innerHTML = completed
+                ? '<span aria-hidden="true">✓</span> Challenge complete!'
+                : '<span aria-hidden="true">○</span> I did it!';
+        });
+    </script>
 </body>
 </html>
