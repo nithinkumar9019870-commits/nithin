@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fff8f6">
+  <meta name="description" content="Enter two names for a playful marriage-fixed-or-not prediction. Just for fun!">
+  <title>Shaadi Check — Marriage Fixed or Not?</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <main class="page">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Shaadi Check home">
+        <span class="brand-icon" aria-hidden="true">♥</span>
+        <span>shaadi check</span>
+      </a>
+      <span class="topbar-note"><span class="sparkle" aria-hidden="true">✦</span> your fun little shaadi check</span>
+    </header>
+
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span aria-hidden="true">✳</span> THE BIG SHAADI QUESTION</p>
+        <h1 id="page-title">Marriage<br><span>fixed or not?</span></h1>
+        <p class="intro">Enter two names and get a playful little prediction. Will wedding bells ring, or is the plot still unfolding?</p>
+        <div class="love-note"><span aria-hidden="true">♡</span> Just for fun — your future is yours to write.</div>
+      </div>
+
+      <div class="card-wrap">
+        <span class="decor decor-one" aria-hidden="true">✳</span>
+        <span class="decor decor-two" aria-hidden="true">✧</span>
+        <form class="calculator-card" id="marriage-form">
+          <div class="card-heading">
+            <span class="card-icon" aria-hidden="true">♥</span>
+            <div>
+              <p class="card-kicker">THE SHAADI PREDICTOR</p>
+              <h2>Who's getting married?</h2>
+            </div>
+          </div>
+
+          <label for="first-name">First name</label>
+          <input id="first-name" name="firstName" type="text" placeholder="e.g. Aanya" maxlength="40" autocomplete="given-name" required>
+
+          <div class="heart-divider" aria-hidden="true"><span></span><b>♡</b><span></span></div>
+
+          <label for="second-name">Their name</label>
+          <input id="second-name" name="secondName" type="text" placeholder="e.g. Arjun" maxlength="40" autocomplete="off" required>
+
+          <button type="submit">Check the wedding vibes <span aria-hidden="true">→</span></button>
+          <p class="privacy-note"><span aria-hidden="true">✦</span> No data saved. Just a bit of shaadi-daydreaming.</p>
+
+          <div class="result" id="result" aria-live="polite" hidden>
+            <div class="result-topline"><span>THE FUN PREDICTION</span><span aria-hidden="true">✦</span></div>
+            <div class="score"><span id="score">0</span><span class="percent">%</span></div>
+            <div class="meter" role="progressbar" aria-label="Playful marriage prediction score" aria-valuemin="0" aria-valuemax="100">
+              <span class="meter-fill" id="meter-fill"></span>
+            </div>
+            <h3 id="result-title"></h3>
+            <p id="result-message"></p>
+            <button type="button" class="try-again" id="try-again">Check another pair <span aria-hidden="true">↗</span></button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <span>Made with a little <span class="footer-heart" aria-label="love">♥</span> and shaadi-daydreams</span>
+      <span class="footer-right">For fun only — real life has no calculator.</span>
+    </footer>
+  </main>
+</body>
+</html>
